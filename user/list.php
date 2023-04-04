@@ -4,87 +4,89 @@ ini_set("display_errors", 0);
 
 session_start();
 
-$clientid=$_SESSION['client_id'];
+$clientid = $_SESSION['client_id'];
 //get department
-$d=$conn->query("select * from users_data where login_id='$clientid'");
-$dep=mysqli_fetch_assoc($d);
-$thedep=$dep['department'];
-$_SESSION['department']=$dep['department'];
+$d = $conn->query("select * from users_data where login_id='$clientid'");
+$dep = mysqli_fetch_assoc($d);
+$thedep = $dep['department'];
+$_SESSION['department'] = $dep['department'];
+if (isset($_POST['upload_file'])) {
+    $department = $_POST['department'];
+    $cat = $_POST['cat'];
+    $type = $_POST['type'];
+    $zero = '0';
+    $userid = $_SESSION['client_id'];
 
-
-// if (!isset($_SESSION['admin_name'])) {
-//     header('location:login_form.php');
-// }
-// file upload
-if(isset($_POST['upload_file'])){
-    $department=$_POST['department'];
-    $cat=$_POST['cat'];
-    $type=$_POST['type'];
-    $zero='0';
-    $userid=$_SESSION['client_id'];
-
-    $targetDir = "../uploads/"; 
-    $allowTypes = array('doc','docx','dot','pdf'); 
-    $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = ''; 
-    $fileNames = array_filter($_FILES['files']['name']); 
-    if(!empty($fileNames)){ 
-    foreach($_FILES['files']['name'] as $key=>$val){ 
+    $targetDir = "../uploads/";
+    $allowTypes = array('doc', 'docx', 'dot', 'pdf');
+    $statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = '';
+    $fileNames = array_filter($_FILES['files']['name']);
+    if (!empty($fileNames)) {
+        foreach ($_FILES['files']['name'] as $key => $val) {
             // File upload path 
-            $fileName = basename($_FILES['files']['name'][$key]); 
-            $targetFilePath = $targetDir . $fileName; 
-             
+            $fileName = basename($_FILES['files']['name'][$key]);
+            $targetFilePath = $targetDir . $fileName;
+
             // Check whether file type is valid 
-            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION); 
+            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
             // if(in_array($fileType, $allowTypes)){ 
-                // Upload file to server 
-                if(move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)){ 
-                    // Image db insert sql 
-                    //$insertValuesSQL .= "('".$fileName."','".$department."','".$cat."','".$type."','".$zero."',"; 
-                }else{ 
-                    $errorUpload .= $_FILES['files']['name'][$key].' | '; 
-                } 
+            // Upload file to server 
+            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)) {
+                // Image db insert sql 
+                //$insertValuesSQL .= "('".$fileName."','".$department."','".$cat."','".$type."','".$zero."',"; 
+            } else {
+                $errorUpload .= $_FILES['files']['name'][$key] . ' | ';
+            }
             // }else{ 
             //     $errorUploadType .= $_FILES['files']['name'][$key].' | '; 
             // } 
-    } 
-         
-            $insert = $conn->query("INSERT INTO documents(document, department, category, type, status,user_uploaded) VALUES ('$fileName','$department', '$cat', '$type','$zero', '$userid')"); 
-            if($insert){ 
-                ?><script>alert('Upload successful')</script><?php
-            }else{ 
-                ?><script>alert("Sorry, there was an error uploading your file."); </script><?php
-            } 
-        // }else{ 
-        //     ?><script>//alert("Upload failed! ");</script><?php 
-        // } 
-    }else{ 
-      ?><script>alert('Please select a file to upload.')</script><?php
-    }
-} 
+        }
 
-else if(!empty($_GET['file'])){
-    $fileName  = basename($_GET['file']);
-    $filePath  = "../uploads/".$fileName;
-    
-    if(!empty($fileName) && file_exists($filePath)){
+        $insert = $conn->query("INSERT INTO documents(document, department, category, type, status,user_uploaded) VALUES ('$fileName','$department', '$cat', '$type','$zero', '$userid')");
+        if ($insert) {
+?><script>
+                alert('Upload successful')
+            </script><?php
+                    } else {
+                        ?><script>
+                alert("Sorry, there was an error uploading your file.");
+            </script><?php
+                    }
+                    // }else{ 
+                    //     
+                        ?><script>
+            //alert("Upload failed! ");
+        </script><?php
+                    // } 
+                } else {
+                    ?><script>
+            alert('Please select a file to upload.')
+        </script><?php
+                }
+            } else if (!empty($_GET['file'])) {
+                $fileName  = basename($_GET['file']);
+                $filePath  = "../uploads/" . $fileName;
 
-        //define header
-        header("Cache-Control: public");
-        header("Content-Description: File Transfer");
-        header("Content-Disposition: attachment; filename=$fileName");
-        header("Content-Type: application/zip");
-        header("Content-Transfer-Encoding: binary");
-        
-        //read file 
-        readfile($filePath);
-        
-        exit;
-    }
-    else{
-        ?><script>alert('Document not Found!')</script><?php
-    }
-}
-?>
+                if (!empty($fileName) && file_exists($filePath)) {
+
+                    //define header
+                    header("Cache-Control: public");
+                    header("Content-Description: File Transfer");
+                    header("Content-Disposition: attachment; filename=$fileName");
+                    header("Content-Type: application/zip");
+                    header("Content-Transfer-Encoding: binary");
+
+                    //read file 
+                    readfile($filePath);
+
+                    exit;
+                } else {
+                    ?><script>
+            alert('Document not Found!')
+        </script><?php
+                }
+            }
+                    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -107,103 +109,122 @@ else if(!empty($_GET['file'])){
 </head>
 
 <style>
-    
-    .show-buttons{
-        width:10%;
+    .show-buttons {
+        width: 10%;
     }
-    .userbox{
-        display:flex;
+
+    .userbox {
+        display: flex;
     }
-    .view_doc{
-        width:90%;
+
+    .view_doc {
+        width: 90%;
     }
-    .show-buttons button{
-        width:100%;
+
+    .show-buttons button {
+        width: 100%;
     }
-    .black-back{
-        width:100%;
-        height:100vh;
-        background-color:#000;
-        opacity:0.7;
-        position:absolute;
-        z-index:20;
+
+    .black-back {
+        width: 100%;
+        height: 100vh;
+        background-color: #000;
+        opacity: 0.7;
+        position: absolute;
+        z-index: 20;
     }
+
     #blurred,
-    #view_downloads{
-        display:none;
+    #view_downloads {
+        display: none;
     }
-    #adduser{
-        z-index:21;
+
+    #adduser {
+        z-index: 21;
     }
-#btn-close{
-    width:30%;
-}
-#view_all{
-    display:block;
-}
-#view_doc_back{
-    display:none;
-}
-#view_doc_panel{
-    width:70%;
-    margin-left:15%;
-    height:fit-content;
-    padding-bottom:15px;
-    z-index:53;
-    background:#FFFFFF;
-    border-radius:5px;
-    position:absolute;
-    display:none;
-}
-#view_all .btn, #view_downloads .btn{
-            margin-right:8px;
-            padding:5px;
-            font-size:10px;
-            margin-bottom:5px;
-            cursor:pointer;
-}
-.view_a, .view_b{
-    float:left;
-    width:50%;
-    text-align:left;
-}
-.view_a > *{
-    margin-left:6%;   
-}
-.top h5{
-    margin-left:3%;
-}
-.top h5{
-    color:rgb(0,130,189);
-    font-size:18px;
-    padding:15px;
-    width:fit-content;
-    border-bottom:1px solid rgb(0,130,189);
-}
-.view_a h5,
-.view_a h4,
-.view_a h3,
-.view_a h6{
-    color:rgb(120,120,120);
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-.view_a h5 span,
-.view_a h4 span,
-.view_a h3 span,
-.view_a h6 span{
-    color:rgb(0,130,189);
-    font-weight:lighter;
-}
-.view_b button,{
-    background:rgb(0,130,189);
-    padding:5px 7px 5px 7px;
-    border:0;
-    margin-bottom:15px;
-    border-radius:5px;
-    color:#FFFFFF;
-}
+
+    #btn-close {
+        width: 30%;
+    }
+
+    #view_all {
+        display: block;
+    }
+
+    #view_doc_back {
+        display: none;
+    }
+
+    #view_doc_panel {
+        width: 70%;
+        margin-left: 15%;
+        height: fit-content;
+        padding-bottom: 15px;
+        z-index: 53;
+        background: #FFFFFF;
+        border-radius: 5px;
+        position: absolute;
+        display: none;
+    }
+
+    #view_all .btn,
+    #view_downloads .btn {
+        margin-right: 8px;
+        padding: 5px;
+        font-size: 10px;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+
+    .view_a,
+    .view_b {
+        float: left;
+        width: 50%;
+        text-align: left;
+    }
+
+    .view_a>* {
+        margin-left: 6%;
+    }
+
+    .top h5 {
+        margin-left: 3%;
+    }
+
+    .top h5 {
+        color: rgb(0, 130, 189);
+        font-size: 18px;
+        padding: 15px;
+        width: fit-content;
+        border-bottom: 1px solid rgb(0, 130, 189);
+    }
+
+    .view_a h5,
+    .view_a h4,
+    .view_a h3,
+    .view_a h6 {
+        color: rgb(120, 120, 120);
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .view_a h5 span,
+    .view_a h4 span,
+    .view_a h3 span,
+    .view_a h6 span {
+        color: rgb(0, 130, 189);
+        font-weight: lighter;
+    }
+
+    .view_b button {
+        background: rgb(0, 130, 189);
+        padding: 5px 7px 5px 7px;
+        border: 0;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        color: #FFFFFF;
+    }
 </style>
 
 <body class="admin-user">
@@ -216,29 +237,29 @@ else if(!empty($_GET['file'])){
             <h5>Document Details</h5>
         </div>
         <div class="view_a">
-        <h3>Name: <span id="title_view">The Doc Title</span></h3>
-        <h4>Department: <span id="dep_view">Finance</span></h4>
-        <h5>Category: <span id="cat_view">Financial</span></h5>
-        <h6>Type: <span id="type_view">Records</span></h6>
+            <h3>Name: <span id="title_view">The Doc Title</span></h3>
+            <h4>Department: <span id="dep_view">Finance</span></h4>
+            <h5>Category: <span id="cat_view">Financial</span></h5>
+            <h6>Type: <span id="type_view">Records</span></h6>
         </div>
         <div class="view_b">
             <!-- <button>APPROVE</button> -->
             <!-- <button>REJECT</button> -->
-            
+
         </div>
     </div>
 
-    <div class="black-back"id="blurred">
+    <div class="black-back" id="blurred">
 
     </div>
-    
+
     <div class="navigation_bar">
-    <ul>
-    <li><a href="admin_page.php"><i class='bx bxs-home icon'></i> Dashboard</a></li>
-        <li><a href="list.php"><i class="fa fa-list" aria-hidden="true"></i>List</a></li>
-        <li><a href="../login_form.php"><i class="fa fa-power-off"style="color:red; font-size:24px;" aria-hidden="true"></i></a></li>
-               
-    </ul>
+        <ul>
+            <li><a href="admin_page.php"><i class='bx bxs-home icon'></i> Dashboard</a></li>
+            <li><a href="list.php"><i class="fa fa-list" aria-hidden="true"></i>List</a></li>
+            <li><a href="../login_form.php"><i class="fa fa-power-off" style="color:red; font-size:24px;" aria-hidden="true"></i></a></li>
+
+        </ul>
     </div>
     <section class="home">
         <div class="home-header">
@@ -256,148 +277,148 @@ else if(!empty($_GET['file'])){
         <div class="con">
             <div id="adduser">
                 <div class="entry_box">
-                    <form action="list.php" method="POST"enctype="multipart/form-data" >
+                    <form action="list.php" method="POST" enctype="multipart/form-data">
                         <h3>Add Document</h3>
-                        <?php echo "<input type='text'name='department'readonly value=".$_SESSION['department'].">";?>
-                        <input type="hidden"value=".$thedep.">
-                       
+                        <?php echo "<input type='text'name='department'readonly value=" . $_SESSION['department'] . ">"; ?>
+                        <input type="hidden" value=".$thedep.">
+
                         <select name="cat" id="dep">
                             <?php
                             $select = "select * from category_data";
                             $result = $conn->query($select);
                             ?>
-                            <option value=""disabled selected="true">Category</option>
+                            <option value="" disabled selected="true">Category</option>
                             <?php
-                            while ($row= mysqli_fetch_assoc($result)) {
-                                 echo "<option value=".$row['name'].">".$row['name']."</option>";
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value=" . $row['name'] . ">" . $row['name'] . "</option>";
                             }
                             ?>
-                            
-                            
-                        </select> 
+
+
+                        </select>
                         <select name="type" id="selected">
                             <!--show categories-->
                         </select>
-                        <input type="file" name="files[]" id="file" multiple/> 
-                        <input type="submit"class="btn btn-primary"value="Submit"name="upload_file">
+                        <input type="file" name="files[]" id="file" multiple />
+                        <input type="submit" class="btn btn-primary" value="Submit" name="upload_file">
                     </form>
                 </div>
 
             </div>
 
         </div>
-        
-        
+
+
 
 
         <div class="userbox">
             <div class="view_doc">
                 <div id="view_all">
-            <table id="downloads" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th hidden>#</th>
-                        <th>Documents</th>
-                        <th>Department</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                             <?php
+                    <table id="downloads" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th hidden>#</th>
+                                <th>Documents</th>
+                                <th>Department</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                             $select = "select * from documents where department='$thedep'";
                             $result = $conn->query($select);
-                            while ($row= mysqli_fetch_assoc($result)) {
-                                ?>
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
                                 <tr>
-                                    <td hidden><?php echo $row['id'];?></td>
-                                    <td><?php echo $row['document'];?></td>
-                                    <td><?php echo $row['department'];?></td>
-                                    <td><?php echo $row['category'];?></td>
-                                    <td><?php echo $row['type'];?></td>
+                                    <td hidden><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['document']; ?></td>
+                                    <td><?php echo $row['department']; ?></td>
+                                    <td><?php echo $row['category']; ?></td>
+                                    <td><?php echo $row['type']; ?></td>
                                     <td>
-                                    <?php
-                                        if($row['status']=='0'){
-                                            ?>
+                                        <?php
+                                        if ($row['status'] == '0') {
+                                        ?>
                                             <span style="color:blue;margin-right:5px;">Pending</span>
-                                            <?php
-                                        }else if($row['status']=='1'){
-                                            ?>
+                                        <?php
+                                        } else if ($row['status'] == '1') {
+                                        ?>
                                             <span style="color:green;margin-right:5px;">Approved</span>
-                                            <?php
-                                        }else{
-                                            ?>
+                                        <?php
+                                        } else {
+                                        ?>
                                             <span style="color:red;margin-right:5px;">Rejected</span>
-                                            <?php
+                                        <?php
                                         }
                                         ?>
-                                        <button class="btn btn-secondary"style="cursor:pointer">REPLY</button>
+                                        <button class="btn btn-secondary" style="cursor:pointer">REPLY</button>
                                     </td>
                                     <td style="display:flex;flex-wrap:nowrap;">
-                                   
-                                    <a href="list.php?file=<?php echo $row['document'] ?>"class="btn btn-success getid">DOWNLOAD</a>
+
+                                        <a href="list.php?file=<?php echo $row['document'] ?>" class="btn btn-success getid">DOWNLOAD</a>
                                         <button class="btn btn-secondary btn-view-doc">VIEW</button>
                                         <!-- <button class="btn btn-danger delete_doc">DELETE</button><br> -->
-                                        
-                                        
-                                </td>
+
+
+                                    </td>
                                 </tr>
-                                 <?php
+                            <?php
                             }
                             ?>
-                </tbody>
-            </table>
-            </div>
-            <div id="view_downloads">
-            <table id="user_downloaded" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th hidden>#</th>
-                        <th style="width:40%">Documents</th>
-                        <th>Department</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Download Date</th>
-                        <th>Action</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
+                        </tbody>
+                    </table>
+                </div>
+                <div id="view_downloads">
+                    <table id="user_downloaded" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th hidden>#</th>
+                                <th style="width:40%">Documents</th>
+                                <th>Department</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Download Date</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                             $select = "select * from downloads inner join documents on documents.id=downloads.document_id and department='$thedep' ";
                             $result = $conn->query($select);
-                            while ($row= mysqli_fetch_assoc($result)) {
-                                ?>
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
                                 <tr>
-                                    <td hidden><?php echo $row['download_id'];?></td>
-                                    <td style="width:40%"><?php echo $row['document'];?></td>
-                                    <td><?php echo $row['department'];?></td>
-                                    <td><?php echo $row['category'];?></td>
-                                    <td><?php echo $row['type'];?></td>
-                                    <td><?php echo $row['download_date'];?></td>
+                                    <td hidden><?php echo $row['download_id']; ?></td>
+                                    <td style="width:40%"><?php echo $row['document']; ?></td>
+                                    <td><?php echo $row['department']; ?></td>
+                                    <td><?php echo $row['category']; ?></td>
+                                    <td><?php echo $row['type']; ?></td>
+                                    <td><?php echo $row['download_date']; ?></td>
                                     <td>
                                         <button class="btn btn-success btn-view-doc">VIEW</button>
                                         <!-- <button class="btn btn-danger del_download">DELETE</button> -->
-                                </td>
+                                    </td>
                                 </tr>
-                                 <?php
+                            <?php
                             }
                             ?>
-                </tbody>
-                </tfoot>
-            </table>
+                        </tbody>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
-        </div>
             <div class="show-buttons">
-            <button class="btn btn-primary"id="go_docs">View</button>
-            <button class="btn btn-primary"id="btn_add">Add</button>
-            <!-- <button class="btn btn-primary"id="btn_add">Modify Docs</button> -->
-            <!-- <button class="btn btn-primary"id="btn_add">All Docs</button> -->
-            <button class="btn btn-primary"id="btn_downloads">Downloads</button>
-        </div>
+                <button class="btn btn-primary" id="go_docs">View</button>
+                <button class="btn btn-primary" id="btn_add">Add</button>
+                <!-- <button class="btn btn-primary"id="btn_add">Modify Docs</button> -->
+                <!-- <button class="btn btn-primary"id="btn_add">All Docs</button> -->
+                <button class="btn btn-primary" id="btn_downloads">Downloads</button>
+            </div>
         </div>
 
     </section>
@@ -415,127 +436,138 @@ else if(!empty($_GET['file'])){
         //$('#users').DataTable()
         //$('#downloads').DataTable()
 
-        $('#dep').on('change', function(){
-            var data=$('#dep').val()
+        $('#dep').on('change', function() {
+            const data = $('#dep').val()
             $.ajax({
-                url:'selecteddep.php',
-                method:'POST',
-                data:{data:data},
-                success:function(data){
+                url: 'selecteddep.php',
+                method: 'POST',
+                data: {
+                    data: data
+                },
+                success: function(data) {
                     $('#selected').html(data)
                 }
             })
         })
 
     })
-    $('.getid').on('click', function(){
-        var id=$(this).closest('tr').find('td:eq(0)').text().trim()
+    $('.getid').on('click', function() {
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
         $.ajax({
-                url:'download.php',
-                method:'POST',
-                data:{id:id},
-                success:function(data){
-                    
-                }
-            })
+            url: 'download.php',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(data) {
+
+            }
+        })
     })
-    $('.approve').on('click', function(){
-        var id=$(this).closest('tr').find('td:eq(0)').text().trim()
+    $('.approve').on('click', function() {
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
         $.ajax({
-                url:'approve.php',
-                method:'POST',
-                data:{id:id},
-                success:function(data){
-                    $('#dep').html(data)
-                }
-            })
+            url: 'approve.php',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#dep').html(data)
+            }
+        })
     })
-    $('.delete_doc').on('click', function(){
-        var id=$(this).closest('tr').find('td:eq(0)').text().trim()
+    $('.delete_doc').on('click', function() {
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
         $.ajax({
-                url:'deletedoc.php',
-                method:'POST',
-                data:{id:id},
-                success:function(data){
-                    $('#dep').html(data)
-                }
-            })
+            url: 'deletedoc.php',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#dep').html(data)
+            }
+        })
     })
-    $('.del_download').on('click', function(){
-        var id=$(this).closest('tr').find('td:eq(0)').text().trim()
+    $('.del_download').on('click', function() {
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
         $.ajax({
-                url:'deletedownload.php',
-                method:'POST',
-                data:{id:id},
-                success:function(data){
-                    $('#dep').html(data)
-                }
-            })
+            url: 'deletedownload.php',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#dep').html(data)
+            }
+        })
     })
-    
-    $('.reject').on('click', function(){
-        var id=$(this).closest('tr').find('td:eq(0)').text().trim()
+
+    $('.reject').on('click', function() {
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
         $.ajax({
-                url:'reject.php',
-                method:'POST',
-                data:{id:id},
-                success:function(data){
-                    $('#dep').html(data)
-                }
-            })
+            url: 'reject.php',
+            method: 'POST',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#dep').html(data)
+            }
+        })
     })
-    $('.btn-view-doc').on('click', function(){
-        document.getElementById('view_doc_back').style.display='block'
-        document.getElementById('view_doc_panel').style.display='block'
-        
+    $('.btn-view-doc').on('click', function() {
+        document.getElementById('view_doc_back').style.display = 'block'
+        document.getElementById('view_doc_panel').style.display = 'block'
+
         // getting data tables
-        var row=$(this).closest('tr')
-        var title=row.find('td:eq(1)').text().trim()
-        var dep=row.find('td:eq(2)').text().trim()
-        var cat=row.find('td:eq(3)').text().trim()
-        var type=row.find('td:eq(4)').text().trim()
+        const row = $(this).closest('tr')
+        const title = row.find('td:eq(1)').text().trim()
+        const dep = row.find('td:eq(2)').text().trim()
+        const cat = row.find('td:eq(3)').text().trim()
+        const type = row.find('td:eq(4)').text().trim()
 
         // displaying
         $('#row').html(row)
-            $('#title_view').html(title)
-            $('#dep_view').html(dep)
-            $('#cat_view').html(cat)
-            $('#type_view').html(type)
+        $('#title_view').html(title)
+        $('#dep_view').html(dep)
+        $('#cat_view').html(cat)
+        $('#type_view').html(type)
 
     })
-    $('#view_doc_back').on('click', function(){
-        document.getElementById('view_doc_back').style.display='none'
-        document.getElementById('view_doc_panel').style.display='none'
+    $('#view_doc_back').on('click', function() {
+        document.getElementById('view_doc_back').style.display = 'none'
+        document.getElementById('view_doc_panel').style.display = 'none'
     })
-    
+
     document.getElementById('btn_add').onclick = function() {
-        var getuserform = document.getElementById('adduser');
+        const getuserform = document.getElementById('adduser');
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
-            document.getElementById('blurred').style.display='block'
+            document.getElementById('blurred').style.display = 'block'
         }
 
     }
-    
+
     document.getElementById('blurred').onclick = function() {
-        var getuserform = document.getElementById('adduser');
+        const getuserform = document.getElementById('adduser');
         if (getuserform.style.display = 'block') {
             getuserform.style.display = 'none'
-            document.getElementById('blurred').style.display='none'
+            document.getElementById('blurred').style.display = 'none'
         }
 
     }
-    document.getElementById('go_docs').onclick=function(){
-        document.getElementById('view_downloads').style.display='none'
-        document.getElementById('view_all').style.display='block'
+    document.getElementById('go_docs').onclick = function() {
+        document.getElementById('view_downloads').style.display = 'none'
+        document.getElementById('view_all').style.display = 'block'
     }
-    document.getElementById('btn_downloads').onclick=function(){
-        document.getElementById('view_downloads').style.display='block'
-        document.getElementById('view_all').style.display='none'
+    document.getElementById('btn_downloads').onclick = function() {
+        document.getElementById('view_downloads').style.display = 'block'
+        document.getElementById('view_all').style.display = 'none'
     }
     // downloads
-        $('#downloads').DataTable()
-        $('#user_downloaded').DataTable()
-
+    $('#downloads').DataTable()
+    $('#user_downloaded').DataTable()
 </script>

@@ -22,8 +22,6 @@ if (!isset($_SESSION['admin_name'])) {
 
 </head>
 
-
-
 <body class="admin-user">
     <nav class="sidebar close">
         <header>
@@ -55,8 +53,6 @@ if (!isset($_SESSION['admin_name'])) {
                         <a href="user_home.php">
                             <i class='bx bxs-home icon'></i>
                             <span class="text nav-text" id="btn-home">Dashboard</span>
-
-
                         </a>
                     </li>
 
@@ -64,44 +60,9 @@ if (!isset($_SESSION['admin_name'])) {
                         <a href="docs.php">
                             <i class='bx bxs-home icon'></i>
                             <span class="text nav-text" id="btn-home">Documents</span>
-
-
                         </a>
                     </li>
-                    <!-- <div id="to-show">
-                        <span id="show-child" class="text"><i class='bx bxs-edit icon'></i>Manage document</span>
-                        <span id="hide-child" class="text"><i class='bx bxs-edit icon'></i>Manage documents</span>
-                        <div id="child-content">
-                            <li><a href="category.php" class="text">document category</a></li>
-                            <li><a href="type.php" class="text">document type</a></li>
-                            <li><a href="list.php" class="text">documents</a></li>
-                        </div>
-                    </div> -->
-
-
-                    <!-- <li class="nav-link">
-                        <a href="org.php">
-                            <i class='bx bxs-buildings icon'></i>
-                            <!-- <span class="text nav-text" id="btn-org">Organisation</span> ->
-
-
-
-                        </a>
-                    </li> -->
-
-
                     <li class="nav-link">
-                        <!-- <a href="dep.php">
-                            <i class='bx bxs-building icon'></i>
-                            <span class="text nav-text" id='depid'>Department</span>
-                        </a>
-                    </li> -->
-                    <!-- <li class="nav-link">
-                        <a href="users.php">
-                            <i class='bx bxs-user icon'></i>
-                            <span class="text nav-text">users</span>
-                        </a>
-                    </li> -->
                 </ul>
             </div>
             <div class="bottom-content">
@@ -122,9 +83,7 @@ if (!isset($_SESSION['admin_name'])) {
                     <div class="toggle-switch">
                         <span class="switch">.</span>
                     </div>
-
                 </li>
-
             </div>
         </div>
     </nav>
@@ -133,21 +92,16 @@ if (!isset($_SESSION['admin_name'])) {
 
             <div class="header-text">
                 <div><span>Dashboard</span></div>
-
             </div>
             <div class="user-wrapper">
-
                 <h4><span><i class='bx bxs-user'></i><span><?php echo $_SESSION['admin_name'] ?></span></h>
                         <small>admin</small>
-
             </div>
-
         </div>
         <div class="upload">
             <button>UPLOAD DOC.</button>
         </div>
         <div class="document-holder">
-            
         </div>
     </section>
     <script src="script.js">

@@ -1,17 +1,16 @@
 <?php
 ini_set("display_errors", 0);
 @include 'config.php';
-$name=$_POST['data'];
+$name = $_POST['data'];
 
-$result=$conn->query("select * from type_data where category_name='$name'");
-$row=mysqli_num_rows($result);
-if($row<1){
+$result = $conn->query("select * from type_data where category_name='$name'");
+$row = mysqli_num_rows($result);
+if ($row < 1) {
     echo "<option disabled selected='true'>No Type Found!</option>";
-}else{
+} else {
     echo "<option disabled selected='true'>Select Type</option>";
-    while($thedata=mysqli_fetch_assoc($result)){
-        
-        echo "<option value".$thedata['name'].">".$thedata['name']."</option>";
+    while ($thedata = mysqli_fetch_assoc($result)) {
+
+        echo "<option value" . $thedata['name'] . ">" . $thedata['name'] . "</option>";
     }
 }
-?>

@@ -17,23 +17,21 @@ if (isset($_POST['btn_reg_user'])) {
     $textphone = $_POST['phone_user'];
     $textgender = $_POST['selgender'];
 
-    $confirmqry="select * from users_data where work_email='$textemail' and phone='$textphone' ";
-    $conresult=$conn->query($confirmqry);
-    $rowcount=mysqli_num_rows($conresult);
-    if($rowcount>0){
+    $confirmqry = "select * from users_data where work_email='$textemail' and phone='$textphone' ";
+    $conresult = $conn->query($confirmqry);
+    $rowcount = mysqli_num_rows($conresult);
+    if ($rowcount > 0) {
         echo "<script>alert('User Already Exists!')</script>";
-    }else{
+    } else {
         $insert = "INSERT INTO users_data( firstName, lastName, work_email, phone, Gender) VALUES( '$textfirst','$textlast','$textemail','$textphone', '$textgender')";
-        if(mysqli_query($conn, $insert)){
+        if (mysqli_query($conn, $insert)) {
             echo "<script>alert('User registration successful');</script>";
-        }else{
+        } else {
             echo "<script>alert('Failed!');</script>";
         }
     }
-    
 }
 ?>
-
 ?>
 
 <!DOCTYPE html>
@@ -58,12 +56,9 @@ if (isset($_POST['btn_reg_user'])) {
 
 </head>
 
-
-
 <body class="admin-user">
-<div id="blurr-back">
-
-</div>
+    <div id="blurr-back">
+    </div>
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -88,18 +83,13 @@ if (isset($_POST['btn_reg_user'])) {
                     <input type="search" placeholder="search">
 
                 </li>
-
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="admin_page.php">
                             <i class='bx bxs-home icon'></i>
                             <span class="text nav-text" id="btn-home">Dashboard</span>
-
-
                         </a>
                     </li>
-
-
                     <div id="to-show">
                         <li><span id="show-child" class="text"><i class='bx bxs-edit icon'></i>Manage document</span></li>
                         <span id="hide-child" class="text"><i class='bx bxs-edit icon'></i>Manage documents</span>
@@ -109,16 +99,6 @@ if (isset($_POST['btn_reg_user'])) {
                             <li><a href="list.php" class="text">documents</a></li>
                         </div>
                     </div>
-
-
-                    <!-- <li class="nav-link">
-                        <a href="org.php">
-                            <i class='bx bxs-buildings icon'></i>
-                            <!-- <span class="text nav-text" id="btn-org">Organisation</span> ->
-                        </a>
-                    </li> -->
-
-
                     <li class="nav-link">
                         <a href="dep.php">
                             <i class='bx bxs-building icon'></i>
@@ -174,19 +154,19 @@ if (isset($_POST['btn_reg_user'])) {
         <div class="con">
             <div id="adduser">
                 <div class="entry_box">
-                    <form action="users.php" method="POST"autocomplete="off">
+                    <form action="users.php" method="POST" autocomplete="off">
                         <h3 id="result">User details</h3>
 
-                        <input type="text" id="firstname" name="firstname_user" placeholder="enter firstname"required>
-                        <input type="text" id="lastname" name="lastname_user" placeholder="enter lastname"required>
-                        <input type="text" id="work_email" name="work_email_user" placeholder="enter work email"required>
-                        <input type="number" id="phone" name="phone_user" placeholder="enter phone"required>
-                        <select name="selgender" id=""required>
+                        <input type="text" id="firstname" name="firstname_user" placeholder="enter firstname" required>
+                        <input type="text" id="lastname" name="lastname_user" placeholder="enter lastname" required>
+                        <input type="text" id="work_email" name="work_email_user" placeholder="enter work email" required>
+                        <input type="number" id="phone" name="phone_user" placeholder="enter phone" required>
+                        <select name="selgender" id="" required>
                             <option disabled selected="true">Select gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
-                        <input type="submit" name="btn_reg_user"class="btn btn-primary"value="Submit">
+                        <input type="submit" name="btn_reg_user" class="btn btn-primary" value="Submit">
                     </form>
                 </div>
 
@@ -243,13 +223,7 @@ if (isset($_POST['btn_reg_user'])) {
 
 
     </section>
-
-
-
-
     <script src="js/bootstrap.min.js"></script>
-
-
 </body>
 
 </html>
@@ -266,26 +240,25 @@ if (isset($_POST['btn_reg_user'])) {
 </script>
 <script>
     document.getElementById('btn_add').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
-            back.style.display='block';
-            document.body.scrollTo(0,0)
-            document.body.style.overflow='hidden'
+            back.style.display = 'block';
+            document.body.scrollTo(0, 0)
+            document.body.style.overflow = 'hidden'
         }
-
     }
 </script>
 <script>
     document.getElementById('blurr-back').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'none'
-            document.body.style.overflow='scroll'
-            back.style.display='none'
+            document.body.style.overflow = 'scroll'
+            back.style.display = 'none'
         }
 
     }
