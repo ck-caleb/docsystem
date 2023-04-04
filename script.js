@@ -1,7 +1,3 @@
-
-
-
-
 const body= document.querySelector("body")
       sidebar=body.querySelector(".sidebar"),
       toggle=body.querySelector(".toggle"),
@@ -9,17 +5,11 @@ const body= document.querySelector("body")
       modeSwtich=body.querySelector(".toggle-switch"),
       modeText=body.querySelector(".mode-text"),
       // cards=body.querySelector("card");
-    
-
       toggle.addEventListener("click",() =>{
         sidebar.classList.toggle("close");
       });
-
-
       modeSwtich.addEventListener("click",() =>{
         body.classList.toggle("dark");
-      
-
       if(body.classList.contains("dark")){
           modeText.innerText="light Mode"
       }
@@ -30,9 +20,9 @@ const body= document.querySelector("body")
 
 /*drop down*/
 document.getElementById('show-child').onclick=function(){
-  var getchild=document.getElementById('child-content')
-  var hide=document.getElementById('hide-child')
-  var toshow=document.getElementById('show-child')
+  const getchild=document.getElementById('child-content')
+  const hide=document.getElementById('hide-child')
+  const toshow=document.getElementById('show-child')
   if(getchild.style.display='none'){
     getchild.style.display='block'
     toshow.style.display='none'
@@ -42,9 +32,9 @@ document.getElementById('show-child').onclick=function(){
   }
 }
 document.getElementById('hide-child').onclick=function(){
-  var getchild=document.getElementById('child-content')
-  var show=document.getElementById('show-child')
-  var tohide=document.getElementById('hide-child')
+  const getchild=document.getElementById('child-content')
+  const show=document.getElementById('show-child')
+  const tohide=document.getElementById('hide-child')
   if(getchild.style.display='block'){
     getchild.style.display='none'
     show.style.display='block'
@@ -54,18 +44,10 @@ document.getElementById('hide-child').onclick=function(){
   }
 }
 // ===finish dropdown====
-
-  
-  
-
-
-
-
-
 document.getElementById('btn-org').onclick=function(){
-  var dash=document.getElementById('carde')
-  var organ=document.getElementById('org-panel')
-  var department=document.getElementById('deppanel')
+  const dash=document.getElementById('carde')
+  const organ=document.getElementById('org-panel')
+  const department=document.getElementById('deppanel')
   
   if(dash.style.display='block'){
     dash.style.display='none'
@@ -77,9 +59,9 @@ document.getElementById('btn-org').onclick=function(){
   }
 }
 document.getElementById('depid').onclick=function(){
-  var dash=document.getElementById('carde')
-  var department=document.getElementById('deppanel')
-  var organ=document.getElementById('org-panel')
+  const dash=document.getElementById('carde')
+  const department=document.getElementById('deppanel')
+  const organ=document.getElementById('org-panel')
   if(department.style.display='none'){
     dash.style.display='none'
     department.style.display='block'

@@ -3,12 +3,7 @@ ini_set("display_errors", 0);
 
 @include 'config.php';
 
-session_start();
-
-// if (!isset($_SESSION['user_name'])) {
-//     header('location:login_form.php');
-// }
-
+session_start()
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +25,6 @@ session_start();
 
 </head>
 
-
-
 <body class="admin-user">
   <div class="navigation_bar">
     <ul>
@@ -43,24 +36,16 @@ session_start();
       <li><a href="dep.php"><i class="fa fa-building" aria-hidden="true"></i>Department</a></li>
       <li><a href="message.php"><i class="fa fa-box" aria-hidden="true"></i>Messages</a></li>
       <li><a href="login_form.php"><i class="fa fa-power-off" style="color:red; font-size:24px;" aria-hidden="true"></i>logout</a></li>
-
-
     </ul>
   </div>
   <section class="home">
     <div class="home-header">
-
       <div class="header-text">
         <div><span class="ledashboard">Dashboard</span></div>
-
       </div>
       <div class="user-wrapper">
-
         <h4><span><i class='bx bxs-user'></i><span><?php echo $_SESSION['admin_name'] ?></span></h>
-
-
       </div>
-
     </div>
     <!-- =========dashboard====== -->
     <div class="card_home" id="carde">
@@ -91,25 +76,20 @@ session_start();
         ?>
         <p><?php echo $docount; ?></p>
         <i class="fa fa-building" aria-hidden="true"></i>
-
       </div>
-
     </div>
   </section>
   <script src="script.js">
   </script>
-
 </body>
 
 </html>
-
-
 <script>
   /*drop down*/
   document.getElementById('show-child').onclick = function() {
-    var getchild = document.getElementById('child-content')
-    var hide = document.getElementById('hide-child')
-    var toshow = document.getElementById('show-child')
+    const getchild = document.getElementById('child-content')
+    const hide = document.getElementById('hide-child')
+    const toshow = document.getElementById('show-child')
     if (getchild.style.display = 'none') {
       getchild.style.display = 'block'
       toshow.style.display = 'none'
@@ -119,9 +99,9 @@ session_start();
     }
   }
   document.getElementById('hide-child').onclick = function() {
-    var getchild = document.getElementById('child-content')
-    var show = document.getElementById('show-child')
-    var tohide = document.getElementById('hide-child')
+    const getchild = document.getElementById('child-content')
+    const show = document.getElementById('show-child')
+    const tohide = document.getElementById('hide-child')
     if (getchild.style.display = 'block') {
       getchild.style.display = 'none'
       show.style.display = 'block'
@@ -131,18 +111,10 @@ session_start();
     }
   }
   // ===finish dropdown====
-
-
-
-
-
-
-
-
   document.getElementById('btn-org').onclick = function() {
-    var dash = document.getElementById('carde')
-    var organ = document.getElementById('org-panel')
-    var department = document.getElementById('deppanel')
+    const dash = document.getElementById('carde')
+    const organ = document.getElementById('org-panel')
+    const department = document.getElementById('deppanel')
 
     if (dash.style.display = 'block') {
       dash.style.display = 'none'
@@ -153,9 +125,9 @@ session_start();
     }
   }
   document.getElementById('depid').onclick = function() {
-    var dash = document.getElementById('carde')
-    var department = document.getElementById('deppanel')
-    var organ = document.getElementById('org-panel')
+    const dash = document.getElementById('carde')
+    const department = document.getElementById('deppanel')
+    const organ = document.getElementById('org-panel')
     if (department.style.display = 'none') {
       dash.style.display = 'none'
       department.style.display = 'block'

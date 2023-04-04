@@ -4,36 +4,28 @@ ini_set("display_errors", 0);
 @include 'config.php';
 
 session_start();
-$_SESSION['del']='Delete';
-
-// if (!isset($_SESSION['admin_name'])) {
-//     header('location:login_form.php');
-// }
+$_SESSION['del'] = 'Delete';
 if (isset($_POST['apply_category'])) {
     $textname = $_POST['namecategory'];
-    //$textdate = $_POST['datecategory'];
     $textdescription = $_POST['descriptioncategory'];
     $insert = "INSERT INTO category_data(name, description) VALUES( '$textname','$textdescription')";
-    if($rs = mysqli_query($conn, $insert)){
+    if ($rs = mysqli_query($conn, $insert)) {
         echo "<script>alert('records inserted successfully');</script>";
-    }else{
+    } else {
         echo "<script>alert('Failed');</script>";
     }
-}else if (isset($_POST['update_cat'])) {
+} else if (isset($_POST['update_cat'])) {
     $textname = $_POST['namecategory'];
-    $id=$_POST['hidden_id'];
-    //$textdate = $_POST['datecategory'];
+    $id = $_POST['hidden_id'];
     $textdescription = $_POST['descriptioncategory'];
     $insert = "update category_data set name='$textname', description='$textdescription' where category_id='$id'";
-    if($rs = mysqli_query($conn, $insert)){
+    if ($rs = mysqli_query($conn, $insert)) {
         echo "<script>alert('Updated');</script>";
-    }else{
+    } else {
         echo "<script>alert('Failed');</script>";
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,63 +47,51 @@ if (isset($_POST['apply_category'])) {
 
 </head>
 
-
-
 <body class="admin-user">
-<div id="blurr-back">
-
-</div>
-<div class="navigation_bar">
-    <ul>
-        <li><a href="admin_page.php"><i class='bx bxs-home icon'></i> Dashboard</a></li>
-        <li><a href="category.php"><i class="fa fa-gift" aria-hidden="true"></i>Category</a></li>
-        <li><a href="type.php"><i class="fa fa-list-alt" aria-hidden="true"></i>Type</a></li>
-        <li><a href="list.php"><i class="fa fa-list" aria-hidden="true"></i>List</a></li>
-        <li><a href="users.php"><i class="fa fa-group" aria-hidden="true"></i>Users</a></li>
-        <li><a href="dep.php"><i class="fa fa-building" aria-hidden="true"></i>Department</a></li>
-        <li><a href="login_form.php"><i class="fa fa-power-off"style="color:red; font-size:24px;" aria-hidden="true"></i></a></li>
-                      
-        
-    </ul>
+    <div id="blurr-back">
+    </div>
+    <div class="navigation_bar">
+        <ul>
+            <li><a href="admin_page.php"><i class='bx bxs-home icon'></i> Dashboard</a></li>
+            <li><a href="category.php"><i class="fa fa-gift" aria-hidden="true"></i>Category</a></li>
+            <li><a href="type.php"><i class="fa fa-list-alt" aria-hidden="true"></i>Type</a></li>
+            <li><a href="list.php"><i class="fa fa-list" aria-hidden="true"></i>List</a></li>
+            <li><a href="users.php"><i class="fa fa-group" aria-hidden="true"></i>Users</a></li>
+            <li><a href="dep.php"><i class="fa fa-building" aria-hidden="true"></i>Department</a></li>
+            <li><a href="login_form.php"><i class="fa fa-power-off" style="color:red; font-size:24px;" aria-hidden="true"></i></a></li>
+        </ul>
     </div>
     <section class="home">
         <div class="home-header">
-
             <div class="header-text">
                 <div><span>category</span></div>
-
             </div>
             <div class="user-wrapper">
-
                 <h4><span><i class='bx bxs-user'></i><span><?php echo $_SESSION['admin_name'] ?></span></h>
-
             </div>
-
         </div>
         <style>
-            #shown{
-                display:block;
+            #shown {
+                display: block;
             }
-            #hidden{
-                display:none;
+
+            #hidden {
+                display: none;
             }
         </style>
         <div class="con">
             <div id="adduser">
                 <div class="entry_box">
-                    <form action="category.php" method="POST"autocomplete="off">
+                    <form action="category.php" method="POST" autocomplete="off">
                         <h3>Category details</h3>
-                        <input type="hidden"id="hidden_id"name="hidden_id">
+                        <input type="hidden" id="hidden_id" name="hidden_id">
                         <input type="text" id="namecategory" name="namecategory" placeholder="enter  category name">
-                        <!--input type="date" id="date created" name="datecategory" placeholder="enter date created"-->
-                        <textarea name="descriptioncategory" id="txtdescription" cols="30" rows="10"placeholder="Describe category"></textarea><br>
-                        <input type="submit" style="width:fit-content;margin-left:0%;"name="apply_category"class="btn btn-primary"value="Submit"id="shown">
-                        <input type="submit" name="update_cat"class="btn btn-primary"value="Update"id="hidden">
+                        <textarea name="descriptioncategory" id="txtdescription" cols="30" rows="10" placeholder="Describe category"></textarea><br>
+                        <input type="submit" style="width:fit-content;margin-left:0%;" name="apply_category" class="btn btn-primary" value="Submit" id="shown">
+                        <input type="submit" name="update_cat" class="btn btn-primary" value="Update" id="hidden">
                     </form>
                 </div>
-
             </div>
-
         </div>
         <div class="userbox">
 
@@ -126,8 +106,6 @@ if (isset($_POST['apply_category'])) {
                         <th>Date created</th>
                         <th>Description</th>
                         <th>action</th>
-
-
                     </tr>
                 </thead>
                 <tbody>
@@ -137,13 +115,12 @@ if (isset($_POST['apply_category'])) {
                     while ($rowcount = mysqli_fetch_assoc($result)) {
                     ?>
                         <tr>
-                        <td hidden><?php echo $rowcount['category_id']; ?></td>
-
+                            <td hidden><?php echo $rowcount['category_id']; ?></td>
                             <td><?php echo $rowcount['name']; ?></td>
                             <td><?php echo $rowcount['date_created']; ?></td>
                             <td><?php echo $rowcount['description']; ?></td>
                             <td style="display:flex;flex-wrap:nowrap;">
-                                <button class="btn btn-danger del"style="margin-right:5px">delete</button>
+                                <button class="btn btn-danger del" style="margin-right:5px">delete</button>
                                 <button class="btn btn-info update">edit</button>
                             </td>
 
@@ -158,67 +135,61 @@ if (isset($_POST['apply_category'])) {
                 </tfoot>
             </table>
         </div>
-
     </section>
     <script src="js/bootstrap.min.js"></script>
-
 </body>
 
 </html>
-
-
 <script>
     $(document).ready(function() {
         // $('#users').DataTable();
         $('#category').DataTable();
     })
 </script>
-
 <script src="script.js">
 </script>
 <script>
     document.getElementById('btn_add').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
-            back.style.display='block';
-            document.body.scrollTo(0,0)
-            document.body.style.overflow='hidden'
-            document.getElementById('shown').style.display='block'
-            document.getElementById('hidden').style.display='none'
+            back.style.display = 'block';
+            document.body.scrollTo(0, 0)
+            document.body.style.overflow = 'hidden'
+            document.getElementById('shown').style.display = 'block'
+            document.getElementById('hidden').style.display = 'none'
         }
-
     }
 </script>
 <script>
     document.getElementById('blurr-back').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'none'
-            document.body.style.overflow='scroll'
-            back.style.display='none'
+            document.body.style.overflow = 'scroll'
+            back.style.display = 'none'
         }
     }
-    $('.update').on('click', function(){
-        var id=$(this).closest('tr').find('td:eq(0)').text().trim()
-        var cat=$(this).closest('tr').find('td:eq(1)').text().trim()
-        var des=$(this).closest('tr').find('td:eq(3)').text().trim()
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+    $('.update').on('click', function() {
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
+        const cat = $(this).closest('tr').find('td:eq(1)').text().trim()
+        const des = $(this).closest('tr').find('td:eq(3)').text().trim()
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
-            back.style.display='block';
-            document.body.scrollTo(0,0)
-            document.body.style.overflow='hidden'
-            document.getElementById('hidden_id').value=id
-            document.getElementById('namecategory').value=cat
-            document.getElementById('txtdescription').value=des
-            document.getElementById('shown').style.display='none'
-            document.getElementById('hidden').style.display='block'
+            back.style.display = 'block';
+            document.body.scrollTo(0, 0)
+            document.body.style.overflow = 'hidden'
+            document.getElementById('hidden_id').value = id
+            document.getElementById('namecategory').value = cat
+            document.getElementById('txtdescription').value = des
+            document.getElementById('shown').style.display = 'none'
+            document.getElementById('hidden').style.display = 'block'
         }
     })
 </script>

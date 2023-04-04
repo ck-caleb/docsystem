@@ -4,11 +4,6 @@ ini_set("display_errors", 0);
 $_SESSION['del'] = 'Delete';
 
 session_start();
-
-// if (!isset($_SESSION['admin_name'])) {
-//     header('location:login_form.php');
-// }
-
 if (isset($_POST['apply_type'])) {
     $textname = $_POST['nametype'];
     // $textdat = $_POST['datetype'];
@@ -119,35 +114,25 @@ if (isset($_POST['apply_type'])) {
                             }
                             ?>
                         </select>
-                        <!--input type="text" id="date_created" name="date
-                        type" placeholder="enter date_created"-->
-                        <!--input type="text" id="date_modified" name="datemodifiedtype" placeholder="date_modified"-->
                         <input type="submit" class="btn btn-info"name="apply_type"value="Submit"id="shown">
                         <input type="submit" class="btn btn-info"name="update_type"value="Update"id="hidden">
-                        
                     </form>
                 </div>
-
             </div>
-
         </div>
         <div class="userbox">
-
             <div class="btn btn-primary" id="btn_add">NEW TYPE</div>
             <div id="userss2"></div>
-
             <!--div class="btn btn-primary" id="btn_create">Create</div-->
             <table id="type" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <th hidden>#</th>
-
                         <th>Name</th>
                         <th>Category</th>
                         <th>Date Created</th>
                         <th>Last Modified</th>
                         <th>action</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -171,20 +156,13 @@ if (isset($_POST['apply_type'])) {
 
                     }
                     ?>
-
-
                 </tbody>
                 <tfoot>
-
                 </tfoot>
             </table>
         </div>
-
     </section>
-
-
 </body>
-
 </html>
 <script>
     $(document).ready(function() {
@@ -195,8 +173,8 @@ if (isset($_POST['apply_type'])) {
 </script>
 <script>
     document.getElementById('btn_add').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back=document.getElementById('blurr-back')
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
@@ -209,8 +187,8 @@ if (isset($_POST['apply_type'])) {
 </script>
 <script>
     document.getElementById('blurr-back').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back=document.getElementById('blurr-back')
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'none'
             document.body.style.overflow='scroll'
@@ -221,10 +199,10 @@ if (isset($_POST['apply_type'])) {
 
     }
     $('.update').on('click', function(){ 
-       var id=$(this).closest('tr').find('td:eq(0)').text().trim()
-       var name=$(this).closest('tr').find('td:eq(1)').text().trim()
-        var getuserform = document.getElementById('adduser');
-        var back=document.getElementById('blurr-back')
+       const id=$(this).closest('tr').find('td:eq(0)').text().trim()
+       const name=$(this).closest('tr').find('td:eq(1)').text().trim()
+        const getuserform = document.getElementById('adduser');
+        const back=document.getElementById('blurr-back')
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'

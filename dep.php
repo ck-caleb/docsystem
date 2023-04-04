@@ -5,17 +5,10 @@ ini_set("display_errors", 0);
 
 session_start();
 $_SESSION['del'] = 'Delete';
-
-// if (!isset($_SESSION['admin_name'])) {
-//     header('location:login_form.php');
-// }
-
 if (isset($_POST['apply_department'])) {
     $textdepartment = $_POST['department_table'];
-
     $insert = "INSERT INTO department_data( department) VALUES( '$textdepartment')";
     $rs = mysqli_query($conn, $insert);
-
     echo "<script>alert('records inserted successfully');</script>";
 } else if (isset($_POST['update_dep'])) {
     $textdepartment = $_POST['department_table'];
@@ -47,11 +40,8 @@ if (isset($_POST['apply_department'])) {
     <script src="js/del.js"></script>
 </head>
 
-
-
 <body class="admin-user">
     <div id="blurr-back">
-
     </div>
     <div class="navigation_bar">
         <ul>
@@ -62,8 +52,6 @@ if (isset($_POST['apply_department'])) {
             <li><a href="users.php"><i class="fa fa-group" aria-hidden="true"></i>Users</a></li>
             <li><a href="dep.php"><i class="fa fa-building" aria-hidden="true"></i>Department</a></li>
             <li><a href="login_form.php"><i class="fa fa-power-off" style="color:red; font-size:24px;" aria-hidden="true"></i></a></li>
-
-
         </ul>
     </div>
     <style>
@@ -84,34 +72,23 @@ if (isset($_POST['apply_department'])) {
             </div>
             <div class="user-wrapper">
                 <h4><span><i class='bx bxs-user'></i><span><?php echo $_SESSION['admin_name'] ?></span></h4>
-
-
             </div>
-
         </div>
-
         <div class="con">
             <div id="adduser">
                 <div class="entry_box">
                     <form action="dep.php" method="POST">
                         <h3>Department Details</h3>
                         <!-- <label for="department">department</label> -->
-
                         <input type="text" name="department_table" id="department_table" placeholder="enter department name">
                         <input type="hidden" id="hidden_id" name="hidden_id">
                         <input type="submit" name="apply_department" value="Submit" class="btn btn-primary" id="shown">
                         <input type="submit" name="update_dep" value="Update" class="btn btn-primary" id="hidden">
-                        <!-- <button  name="apply_department">Submit</button> -->
-
                     </form>
                 </div>
-
             </div>
-
         </div>
-
         <div class="userbox">
-
             <div class="btn btn-primary" id="btn_add">NEW DEPT</div>
             <div id="userss3"></div>
             <table id="dep" class="table table-striped" style="width:100%">
@@ -120,8 +97,6 @@ if (isset($_POST['apply_department'])) {
                         <th hidden>#</th>
                         <th>Department</th>
                         <th>action</th>
-
-
                     </tr>
                 </thead>
                 <tbody>
@@ -145,20 +120,11 @@ if (isset($_POST['apply_department'])) {
 
                 </tbody>
                 <tfoot>
-
                 </tfoot>
             </table>
         </div>
-
-
-
-
-
-
     </section>
     <script src="js/bootstrap.min.js"></script>
-
-
 </body>
 
 </html>
@@ -173,9 +139,8 @@ if (isset($_POST['apply_department'])) {
 </script>
 <script>
     document.getElementById('btn_add').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back = document.getElementById('blurr-back')
-        // getuserform.style.display='block';
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
             back.style.display = 'block';
@@ -187,8 +152,8 @@ if (isset($_POST['apply_department'])) {
 </script>
 <script>
     document.getElementById('blurr-back').onclick = function() {
-        var getuserform = document.getElementById('adduser');
-        var back = document.getElementById('blurr-back')
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'none'
             document.body.style.overflow = 'scroll'
@@ -198,10 +163,10 @@ if (isset($_POST['apply_department'])) {
         }
     }
     $('.update').on('click', function() {
-        var name = $(this).closest('tr').find('td:eq(1)').text().trim()
-        var id = $(this).closest('tr').find('td:eq(0)').text().trim()
-        var getuserform = document.getElementById('adduser');
-        var back = document.getElementById('blurr-back')
+        const name = $(this).closest('tr').find('td:eq(1)').text().trim()
+        const id = $(this).closest('tr').find('td:eq(0)').text().trim()
+        const getuserform = document.getElementById('adduser');
+        const back = document.getElementById('blurr-back')
         // getuserform.style.display='block';
         if (getuserform.style.display = 'none') {
             getuserform.style.display = 'block'
